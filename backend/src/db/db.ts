@@ -1,6 +1,6 @@
-import mongoose from "mongoose"
+import mongoose, { Document } from "mongoose"
 async ()=>{
-    await mongoose.connect(env("MONGO_URL"));
+    await mongoose.connect(process.env.MONGO_URL!);
 }
 
 const userSchema = new mongoose.Schema({
@@ -22,8 +22,34 @@ const userSchema = new mongoose.Schema({
         minLength: 3,
         maxLength: 50
 
+    },
+    verificationStatus:{
+        type: Boolean,
+        default: false
     }
 });
+// Define an interface for the OTP store document
+interface IOtpStore extends Document {
+    email: string;
+    otp: number;
+    createdAt: Date;
+  }
+const otpStoreSchema = new mongoose.Schema<IOtpStore>({
+    email: {
+        type:String,
+        required: true,
+    },
+    otp: {
+        type:Number,
+        required: true,
+    },
+    createdAt: {
+        type:Date,
+        default: Date.now,
+       
+    }
+    
+})
 const exerciseSchema = new mongoose.Schema({
     userid:{
         type: mongoose.Schema.Types.ObjectId,
@@ -72,11 +98,9 @@ const setSchema = new mongoose.Schema({
 });
 
 const User = mongoose.model("User", userSchema);
+const OtpStore = mongoose.model("OtpStore",otpStoreSchema);
 const Exercise = mongoose.model("Exercise", exerciseSchema);
 const Set = mongoose.model("Set", setSchema);
 
-export { User, Exercise, Set };
+export { User, OtpStore, Exercise, Set };
 
-function env(arg0: string): string {
-    throw new Error("Function not implemented.");
-}
