@@ -4,11 +4,7 @@ import zod from 'zod';
 import {User} from '../db/db';
 import { sendOtp, verifyOtp } from './otpVerifier';
 import * as jwt from 'jsonwebtoken';
-
-
-
 const JWT_SECRET = process.env.JWT_SECRET
-
 
 //signup
 const signupBody = zod.object({
@@ -23,8 +19,7 @@ router.post("/signup", async (req: Request, res: Response ):Promise<any>=> {
     if(!success){
         return res.status(411).json({
             message:"Invalid username or email"
-        })
-       
+        })   
     }
     const existingUser1 = await User.findOne({
         email: req.body.email
@@ -47,13 +42,11 @@ router.post("/signup", async (req: Request, res: Response ):Promise<any>=> {
     if (!otpResult.success) {
         return res.status(500).json({ message: otpResult.message });
     }
-
     const user = await User.create({
         email: req.body.email,
         username: req.body.username,
         verifacationStatus: false
     })
-
     // Send a success response indicating that the OTP has been sent
     return res.json({
         message: "OTP sent successfully to your email. Please verify to complete signup."
@@ -86,9 +79,7 @@ router.post("/signin", async (req: Request, res: Response, next: NextFunction): 
     // Send a success response indicating that the OTP has been sent
     return res.json({
         message: "OTP sent successfully to your email. Please verify to complete signup."
-    });
-
-    
+    });    
 });
 router.post("/verify-otp", async (req:Request, res:Response ):Promise<any>=> {  
     // Verify the OTP
@@ -117,7 +108,6 @@ router.post("/verify-otp", async (req:Request, res:Response ):Promise<any>=> {
     }
     //jwttoken
     const userId = existingUser?._id;
-
     const token= jwt.sign({
         userId
     },
@@ -127,5 +117,4 @@ router.post("/verify-otp", async (req:Request, res:Response ):Promise<any>=> {
         token: token
     })
 });
-
 export default router;
