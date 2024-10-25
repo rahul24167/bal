@@ -50,13 +50,23 @@ const otpStoreSchema = new mongoose.Schema<IOtpStore>({
     }
     
 })
-const exerciseSchema = new mongoose.Schema({
-    userid:{
+const sessonSchema = new mongoose.Schema({
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
         ref: 'User'
     },
-    excerciseName:{
+    name:{
+        type:String,
+        required:true
+    }
+})
+const exerciseSchema = new mongoose.Schema({
+    sessonid:{
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Sesson'
+    },
+    name:{
         type: String,
         required: true,
         trim: true,
@@ -99,8 +109,9 @@ const setSchema = new mongoose.Schema({
 
 const User = mongoose.model("User", userSchema);
 const OtpStore = mongoose.model("OtpStore",otpStoreSchema);
+const Sesson = mongoose.model("Sesson", sessonSchema);
 const Exercise = mongoose.model("Exercise", exerciseSchema);
 const Set = mongoose.model("Set", setSchema);
 
-export { User, OtpStore, Exercise, Set };
+export { User, OtpStore, Sesson, Exercise, Set };
 

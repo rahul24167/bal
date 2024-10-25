@@ -2,7 +2,7 @@ import express, { Request, Response, NextFunction} from 'express';
 const router = express.Router();
 import zod from 'zod';
 import {User} from '../db/db';
-import { sendOtp, verifyOtp } from './otpVerifier';
+import { sendOtp, verifyOtp } from './functions/otpVerifier';
 import * as jwt from 'jsonwebtoken';
 const JWT_SECRET = process.env.JWT_SECRET
 
@@ -35,7 +35,8 @@ router.post("/signup", async (req: Request, res: Response ):Promise<any>=> {
     if(existingUser2){
         return res.status(411).json({
             message: "Username already exists, use another username"
-        })
+        });
+        
     }
     //verify email by otp
     const otpResult = await sendOtp(req.body.email);
@@ -46,7 +47,8 @@ router.post("/signup", async (req: Request, res: Response ):Promise<any>=> {
         email: req.body.email,
         username: req.body.username,
         verifacationStatus: false
-    })
+    });
+    
     // Send a success response indicating that the OTP has been sent
     return res.json({
         message: "OTP sent successfully to your email. Please verify to complete signup."
@@ -90,6 +92,7 @@ router.post("/verify-otp", async (req:Request, res:Response ):Promise<any>=> {
     const existingUser = await User.findOne({
         email: req.body.email
     })
+    
     let message= "Signin Completed successfully";
     if(!existingUser?.verificationStatus){
         //signup
