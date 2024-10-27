@@ -61,7 +61,7 @@ const sessonSchema = new mongoose.Schema({
     }
 })
 const exerciseSchema = new mongoose.Schema({
-    sessonid:{
+    sessonId:{
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'Sesson'
@@ -81,7 +81,7 @@ const exerciseSchema = new mongoose.Schema({
 
 });
 const setSchema = new mongoose.Schema({
-    exerciseid:{
+    exerciseId:{
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'Exercise'

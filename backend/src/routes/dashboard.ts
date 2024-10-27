@@ -4,6 +4,15 @@ import zod from 'zod';
 import {Sesson, Exercise, Set} from '../db/db';
 import authMiddleware from '../middleware';
 
+router.post("/",authMiddleware, async (req, res):Promise<any> => {
+    const sessons = await Sesson.find({
+        userId: req.body.userId
+    });
+    return res.status(200).json({
+        sessons
+    })
+});
+
 const sessonBody = zod.object({
     sessonName: zod.string(),
     userId: zod.string(),
@@ -11,12 +20,13 @@ const sessonBody = zod.object({
         name: zod.string(),
         sets: zod.number(),
     }))    
-})
-router.post("/createSession",authMiddleware, async (req, res):Promise<any> => {
+});
+//create a workout sesson of a perticular number of exercises
+router.post("/createSesson",authMiddleware, async (req, res):Promise<any> => {
     const {success} = sessonBody.safeParse(req.body)
     if(!success){
         return res.status(404).json({
-            message: "Invalid session"
+            message: "Invalid workout sesson"
         })
     }
     const sessonName = req.body.sessonName;
@@ -36,15 +46,37 @@ router.post("/createSession",authMiddleware, async (req, res):Promise<any> => {
         sessonId: sesson._id,
         name: w.name,
         sets: w.sets,
-
     })}); 
     return res.status(200).json({
         message: "Workout sesson created successfully"
     })
 });
+//send all excercise of requested sessonId arranged in the workout object
 router.post("/startWorkout",authMiddleware, async (req, res):Promise<any> => {
-
+    const sessonId= req.body.sessonId;
+    const Workout = await Exercise.findOne({
+        sessonId
+    })
+    return res.status(200).json({
+        Workout
+    })
 })
+router.post("/exercisestarted", authMiddleware, async (req,res):Promise<any> =>{
+    const exerciseId = req.body.exerciseId;
+    const setNumber = req.body.setNumber;
+    const reps = req.body.reps;
+    const weight = req.body.weight;
+
+    const set = await Set.create({
+        exerciseId,
+        setNumber,
+        reps,
+        weight
+    });
+    return res.status(200).json({
+        message:"entery of set made succssfully"
+    })
+});
 
 
 export default router;
