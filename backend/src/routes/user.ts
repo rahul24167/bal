@@ -12,7 +12,8 @@ const signupBody = zod.object({
     .string()
     .regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{1,15}$/, "Username must contain at least one letter, one number, and be up to 15 characters long.")
     .max(15, "Username must not exceed 15 characters."),
-    email: zod.string().email()
+    email: zod.string().email(),
+    password: zod.string()
 })
 router.post("/signup", async (req: Request, res: Response ):Promise<any>=> {
     const {success} = signupBody.safeParse(req.body);
@@ -38,25 +39,27 @@ router.post("/signup", async (req: Request, res: Response ):Promise<any>=> {
         });
         
     }
-    //verify email by otp
-    const otpResult = await sendOtp(req.body.email);
-    if (!otpResult.success) {
-        return res.status(500).json({ message: otpResult.message });
-    }
     const user = await User.create({
         email: req.body.email,
         username: req.body.username,
+        password: req.body.password,
         verifacationStatus: false
     });
-    
-    // Send a success response indicating that the OTP has been sent
-    return res.json({
-        message: "OTP sent successfully to your email. Please verify to complete signup."
+    const userId = user?._id;
+    const token= jwt.sign({
+        userId
+    },
+    JWT_SECRET as string);
+    res.json({
+        message:"Signup succssful",
+        token: token
     });
+    return;
 });
 //signin
 const signinBody = zod.object({
-    email: zod.string().email()
+    email: zod.string().email(),
+    password: zod.string()
 })
 router.post("/signin", async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     const {success} = signinBody.safeParse(req.body);
@@ -73,51 +76,57 @@ router.post("/signin", async (req: Request, res: Response, next: NextFunction): 
             message: "User not found. Please SignUp first"
         })
     }
-    //verify email by otp
-    const otpResult = await sendOtp(req.body.email);
-    if (!otpResult.success) {
-        return res.status(500).json({ message: otpResult.message });
+    if(!(existingUser.password==req.body.password)){
+        return res.status(401).json({
+            message: "wrong password"
+        });
     }
-    // Send a success response indicating that the OTP has been sent
-    return res.json({
-        message: "OTP sent successfully to your email. Please verify to complete signup."
-    });    
-});
-router.post("/verify-otp", async (req:Request, res:Response ):Promise<any>=> {  
-    // Verify the OTP
-    const verificationResult = await verifyOtp(req.body.email, req.body.otp);
-    if (!verificationResult.success) {
-        return res.status(400).json({ message: verificationResult.message });
-    }
-    const existingUser = await User.findOne({
-        email: req.body.email
-    })
-    
-    let message= "Signin Completed successfully";
-    if(!existingUser?.verificationStatus){
-        //signup
-        const existingUser = await User.findOneAndUpdate(
-            {
-                email: req.body.email
-            },
-            {
-                verifacationStatus: true
-            },
-            {
-                new:true
-            }
-        )
-        message = "Signup Completed successfully";
-    }
-    //jwttoken
     const userId = existingUser?._id;
     const token= jwt.sign({
         userId
     },
-    JWT_SECRET as string)
+    JWT_SECRET as string);
     res.json({
-        message: message,
+        message:"Signin succssful",
         token: token
-    })
+    });
+    return;
 });
+// router.post("/verify-otp", async (req:Request, res:Response ):Promise<any>=> {  
+//     // Verify the OTP
+//     const verificationResult = await verifyOtp(req.body.email, req.body.otp);
+//     if (!verificationResult.success) {
+//         return res.status(400).json({ message: verificationResult.message });
+//     }
+//     const existingUser = await User.findOne({
+//         email: req.body.email
+//     })
+    
+//     let message= "Signin Completed successfully";
+//     if(!existingUser?.verificationStatus){
+//         //signup
+//         const existingUser = await User.findOneAndUpdate(
+//             {
+//                 email: req.body.email
+//             },
+//             {
+//                 verifacationStatus: true
+//             },
+//             {
+//                 new:true
+//             }
+//         )
+//         message = "Signup Completed successfully";
+//     }
+//     //jwttoken
+//     const userId = existingUser?._id;
+//     const token= jwt.sign({
+//         userId
+//     },
+//     JWT_SECRET as string)
+//     res.json({
+//         message: message,
+//         token: token
+//     })
+// });
 export default router;

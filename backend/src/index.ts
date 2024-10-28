@@ -1,7 +1,8 @@
 import express from 'express';
 import cors from 'cors';
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 import rootRouter from './routes/index';
+import { connectToDatabase } from './db/db';
 dotenv.config();
 
 const app = express();
@@ -11,6 +12,6 @@ app.use(express.json());
 
 app.use("/api/v1", rootRouter);
 
-app.listen(3000,() => {
-    console.log(`Server is running`);
-  });
+connectToDatabase().then(() => {
+  app.listen(3000, () => console.log(`Server running on port 3000`));
+});

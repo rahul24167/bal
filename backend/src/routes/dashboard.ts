@@ -8,6 +8,11 @@ router.post("/",authMiddleware, async (req, res):Promise<any> => {
     const sessons = await Sesson.find({
         userId: req.body.userId
     });
+    if(!sessons){
+        return res.status(404).json({
+            message:"no sessons found"
+        })
+    }
     return res.status(200).json({
         sessons
     })

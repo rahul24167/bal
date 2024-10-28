@@ -1,8 +1,9 @@
 import nodemailer from 'nodemailer';
 import crypto from 'crypto';
+import dotenv from "dotenv"
 
-import {OtpStore} from '../db/db';
-
+import { OtpStore } from '../../db/db';
+dotenv.config();
 export const sendOtp = async (email: string) => {
     // 1. Generate a random 6-digit OTP
     const otp = crypto.randomInt(100000, 999999);
@@ -66,3 +67,9 @@ export const verifyOtp = async (email: string, otp: number) => {
     return { success: true };
 };
   
+
+// const otpResult = await sendOtp(req.body.email);
+// console.log(otpResult);
+// if (!otpResult.success) {
+//     return res.status(500).json({ message: otpResult.message });
+// }
