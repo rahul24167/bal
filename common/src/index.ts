@@ -9,14 +9,14 @@ export const signupBody = zod.object({
     password: zod.string()
 })
 //for frontend
-export type SignupInput = zod.infer<typeof signupBody>
+export type signupInput = zod.infer<typeof signupBody>
 
 export const signinBody = zod.object({
     email: zod.string().email(),
     password: zod.string()
 })
 
-export type signinBody = zod.infer<typeof signinBody>
+export type signinInput = zod.infer<typeof signinBody>
 
 export const sessonBody = zod.object({
     sessonName: zod.string(),
@@ -27,4 +27,4 @@ export const sessonBody = zod.object({
     }))    
 });
 
-export type sessonBody = zod.infer<typeof sessonBody>
+export type sessonInput = zod.infer<typeof sessonBody>

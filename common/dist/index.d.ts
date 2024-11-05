@@ -12,7 +12,7 @@ export declare const signupBody: zod.ZodObject<{
     email: string;
     password: string;
 }>;
-export type SignupInput = zod.infer<typeof signupBody>;
+export type signupInput = zod.infer<typeof signupBody>;
 export declare const signinBody: zod.ZodObject<{
     email: zod.ZodString;
     password: zod.ZodString;
@@ -23,7 +23,7 @@ export declare const signinBody: zod.ZodObject<{
     email: string;
     password: string;
 }>;
-export type signinBody = zod.infer<typeof signinBody>;
+export type signinInput = zod.infer<typeof signinBody>;
 export declare const sessonBody: zod.ZodObject<{
     sessonName: zod.ZodString;
     userId: zod.ZodString;
@@ -52,4 +52,4 @@ export declare const sessonBody: zod.ZodObject<{
         sets: number;
     }>;
 }>;
-export type sessonBody = zod.infer<typeof sessonBody>;
+export type sessonInput = zod.infer<typeof sessonBody>;

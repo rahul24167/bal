@@ -4,7 +4,7 @@ import zod from 'zod';
 import {Sesson, Exercise, Set} from '../db/db';
 import authMiddleware from '../middleware';
 
-router.post("/",authMiddleware, async (req, res):Promise<any> => {
+router.get("/",authMiddleware, async (req, res):Promise<any> => {
     const sessons = await Sesson.find({
         userId: req.body.userId
     });

@@ -1,6 +1,6 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { Dumbbell } from "lucide-react";
-
+import Auth from "@/components/Auth";
 function RootLayout() {
   return (
     <>
@@ -14,18 +14,8 @@ function RootLayout() {
         <span className="font-extrabold ml-4">
         <NavLink className="flex items-center gap-2" to="/">Bal</NavLink></span>
         <nav className="ml-auto flex gap-4 sm:gap-6">
-          <NavLink
-            className="text-sm font-medium hover:underline underline-offset-4"
-            to="signup"
-          >
-            SignUp
-          </NavLink>
-          <NavLink
-            className="text-sm font-medium hover:underline underline-offset-4"
-            to="signin"
-          >
-            SignIn
-          </NavLink>
+          {/* Authentication signin /sign up and logout */}
+          <Auth/>
           <NavLink
             className="text-sm font-medium hover:underline underline-offset-4"
             to="about"
