@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 // interface dashboardResponse {
 //   message: string;
 //   sessons: object;
-}
+// }
 export const Dashboard = () => {
   // type of sessons, 
   // const [sessons,setSessons] = useState()
