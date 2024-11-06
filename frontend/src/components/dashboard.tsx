@@ -1,10 +1,10 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BACKEND_URL } from "@/config";
-import { useState } from "react";
+// import { BACKEND_URL } from "@/config";
+// import { useState } from "react";
 
-interface dashboardResponse {
-  message: string;
-  sessons: object;
+// interface dashboardResponse {
+//   message: string;
+//   sessons: object;
 }
 export const Dashboard = () => {
   // type of sessons, 
