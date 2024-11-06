@@ -8,26 +8,26 @@ interface dashboardResponse {
 }
 export const Dashboard = () => {
   // type of sessons, 
-  const [sessons,setSessons] = useState()
-  const token = localStorage.getItem("balAuthToken");
-  async () => {
-    try {
-      const response = await axios.get(`${BACKEND_URL}/dashboard`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        }
-      });
-      const data = response.data as dashboardResponse
-      if(!data.sessons){
-        //what to do with sessons
+  // const [sessons,setSessons] = useState()
+  // const token = localStorage.getItem("balAuthToken");
+  // async () => {
+  //   try {
+  //     const response = await axios.get(`${BACKEND_URL}/dashboard`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       }
+  //     });
+  //     const data = response.data as dashboardResponse
+  //     if(!data.sessons){
+  //       //what to do with sessons
 
-      }else{
+  //     }else{
 
-      }
-    } catch (error) {
-      alert("something went wrong");
-    }
-  };
+  //     }
+  //   } catch (error) {
+  //     alert("something went wrong");
+  //   }
+  // };
 
   return (
     <>
