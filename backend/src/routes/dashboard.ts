@@ -3,6 +3,7 @@ const router = express.Router();
 import zod from 'zod';
 import {Sesson, Exercise, Set} from '../db/db';
 import authMiddleware from '../middleware';
+import { sessonBody } from '@rahul24167/bal-common';
 
 router.get("/",authMiddleware, async (req, res):Promise<any> => {
     const sessons = await Sesson.find({
@@ -18,14 +19,6 @@ router.get("/",authMiddleware, async (req, res):Promise<any> => {
     })
 });
 
-const sessonBody = zod.object({
-    sessonName: zod.string(),
-    userId: zod.string(),
-    workouts: zod.record(zod.object({
-        name: zod.string(),
-        sets: zod.number(),
-    }))    
-});
 //create a workout sesson of a perticular number of exercises
 router.post("/createSesson",authMiddleware, async (req, res):Promise<any> => {
     const {success} = sessonBody.safeParse(req.body)

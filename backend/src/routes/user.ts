@@ -5,16 +5,9 @@ import {User} from '../db/db';
 import { sendOtp, verifyOtp } from './functions/otpVerifier';
 import * as jwt from 'jsonwebtoken';
 const JWT_SECRET = process.env.JWT_SECRET
+import { signupBody, signinBody} from '@rahul24167/bal-common';
 
 //signup
-const signupBody = zod.object({
-    username: zod
-    .string()
-    .regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{1,15}$/, "Username must contain at least one letter, one number, and be up to 15 characters long.")
-    .max(15, "Username must not exceed 15 characters."),
-    email: zod.string().email(),
-    password: zod.string()
-})
 router.post("/signup", async (req: Request, res: Response ):Promise<any>=> {
     const {success} = signupBody.safeParse(req.body);
     if(!success){
@@ -57,10 +50,6 @@ router.post("/signup", async (req: Request, res: Response ):Promise<any>=> {
     return;
 });
 //signin
-const signinBody = zod.object({
-    email: zod.string().email(),
-    password: zod.string()
-})
 router.post("/signin", async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     const {success} = signinBody.safeParse(req.body);
     if(!success) {
