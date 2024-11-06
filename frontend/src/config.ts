@@ -1,1 +1,1 @@
-export const BACKEND_URL = "https://backend.rahul24167.workers.dev"
+export const BACKEND_URL = "https://bal-8to2.onrender.com/api/v1"

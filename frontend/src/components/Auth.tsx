@@ -1,13 +1,16 @@
-import { BACKEND_URL } from "@/config";
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import { Button } from "@/components/ui/button"
+
 
 const Auth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const token = localStorage.getItem("balAuthToken");
-  if(token) {
-    setIsAuthenticated(true);
-  }
+  useEffect(() => {
+    const token = localStorage.getItem("balAuthToken");
+    if (token) {
+      setIsAuthenticated(true);
+    }
+  }, []);
   
   const handleLogout = async() => {
     await localStorage.removeItem("balAuthToken")
@@ -17,7 +20,7 @@ const Auth = () => {
   return (
     <>
       {isAuthenticated ? (
-        <button onClick={handleLogout}>Logout</button>
+        <Button onClick={handleLogout}>Logout</Button>
       ) : (
         <>
           <NavLink

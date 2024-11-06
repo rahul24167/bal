@@ -16,7 +16,7 @@
     "@radix-ui/react-navigation-menu": "^1.2.1",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-tabs": "^1.1.1",
-    "@rahul24167/bal-common": "^1.0.2",
+    "@rahul24167/bal-common": "^1.0.4",
     "@types/axios": "^0.9.36",
     "axios": "^1.7.7",
     "class-variance-authority": "^0.7.0",

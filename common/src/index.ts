@@ -1,10 +1,11 @@
 import zod from 'zod'
 //for backend
 export const signupBody = zod.object({
-    username: zod
-    .string()
-    .regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{1,15}$/, "Username must contain at least one letter, one number, and be up to 15 characters long.")
-    .max(15, "Username must not exceed 15 characters."),
+    // username: zod
+    // .string()
+    // .regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{1,15}$/, "Username must contain at least one letter, one number, and be up to 15 characters long.")
+    // .max(15, "Username must not exceed 15 characters."),
+    username:zod.string().max(15, "Username must not exceed 15 characters"),
     email: zod.string().email(),
     password: zod.string()
 })

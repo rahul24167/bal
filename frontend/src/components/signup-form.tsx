@@ -43,7 +43,7 @@ export function SignupForm() {
         navigate("/dashboard");
       }
     } catch (e) {
-      alert("Error while signing up");
+      alert("Try few times as our backend is busy.");
     }
   };
 

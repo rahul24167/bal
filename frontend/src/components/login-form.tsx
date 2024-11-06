@@ -42,7 +42,7 @@ export function LoginForm() {
         navigate("/dashboard");
       }
     } catch (e) {
-      alert("Error while signing in");
+      alert("Try few times as our backend is busy.");
     }
   };
   return (
