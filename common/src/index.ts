@@ -22,6 +22,7 @@ export type signinInput = zod.infer<typeof signinBody>
 export const sessonBody = zod.object({
     sessonName: zod.string(),
     userId: zod.string(),
+    //zod.record is used for when the no. of elements of workout object is unkonwnw
     workouts: zod.record(zod.object({
         name: zod.string(),
         sets: zod.number(),

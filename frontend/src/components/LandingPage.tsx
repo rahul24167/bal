@@ -1,9 +1,18 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart2, Calendar, Users } from "lucide-react";
+import { useEffect } from "react";
 
 export const LandingPage = () => {
+  const token = localStorage.getItem("balAuthToken");
+  const navigate = useNavigate();
+  if (token) {
+    useEffect(()=>{
+      navigate("/dashboard");
+    })
+    return null
+  }
   return (
     <>
       <main className="flex-1">
@@ -87,7 +96,9 @@ export const LandingPage = () => {
                 </p>
               </div>
               <div className="w-full max-w-sm space-y-2">
-                  <Button type="submit"><NavLink to="signup">Sign Up</NavLink></Button>
+                <Button type="submit">
+                  <NavLink to="signup">Sign Up</NavLink>
+                </Button>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
                   By signing up, you agree to our{" "}
                   <NavLink className="underline underline-offset-2" to="terms">

@@ -30,7 +30,7 @@ export function LoginForm() {
   const sendSigninRequest = async () => {
     try {
       const response = await axios.post(
-        `${BACKEND_URL}/user/signup`,
+        `${BACKEND_URL}/user/signin`,
         postInputs
       );
       const data = response.data as signinResponse;
