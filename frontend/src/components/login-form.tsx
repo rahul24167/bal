@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -14,19 +14,27 @@ import { Label } from "@/components/ui/label";
 import { signinInput } from "@rahul24167/bal-common"
 import { BACKEND_URL } from "@/config";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface signinResponse {
   token: string;
   message: string;
 }
+interface ContextProps {
+  isAuthenticated: boolean;
+  setIsAuthenticated: (authStatus: boolean) => void;
+}
 export function LoginForm() {
+  const { isAuthenticated, setIsAuthenticated} = useOutletContext<ContextProps>();
+  const navigate = useNavigate();
+  if (isAuthenticated) {
+    navigate("/dashboard");
+  }
   const [postInputs, setPostInputs] = useState<signinInput>({
     email: "",
     password: "",
   });
   const [message, setMessage] = useState("");
-  const navigate = useNavigate();
   const sendSigninRequest = async () => {
     try {
       const response = await axios.post(
@@ -38,7 +46,8 @@ export function LoginForm() {
       if (!token) {
         setMessage(data.message);
       } else {
-        localStorage.setItem("balAuthToken", token);
+        localStorage.setItem("token", token);
+        setIsAuthenticated(true);
         navigate("/dashboard");
       }
     } catch (e) {
@@ -92,10 +101,10 @@ export function LoginForm() {
             />
           </div>
           <Button onClick={sendSigninRequest} type="submit" className="w-full">
-            Login
+            Signin
           </Button>
           <Button variant="outline" className="w-full">
-            Login with Google
+            Guest
           </Button>
         </div>
         <div className="mt-4 text-center text-sm">

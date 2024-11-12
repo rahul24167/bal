@@ -13,9 +13,10 @@ const Auth = () => {
   }, []);
   
   const handleLogout = async() => {
-    await localStorage.removeItem("balAuthToken")
+    await localStorage.removeItem("token")
     
     setIsAuthenticated(false);
+    //navigate to LandingPage
   };
   return (
     <>

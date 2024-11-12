@@ -1,21 +1,21 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useOutletContext } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart2, Calendar, Users } from "lucide-react";
 import { useEffect } from "react";
 
+interface ContextProps {
+  isAuthenticated: boolean;
+}
 export const LandingPage = () => {
-  const token = localStorage.getItem("balAuthToken");
+  const { isAuthenticated } = useOutletContext<ContextProps>();
   const navigate = useNavigate();
-  if (token) {
-    useEffect(()=>{
+  if (isAuthenticated ) {
       navigate("/dashboard");
-    })
-    return null
   }
   return (
     <>
-      <main className="flex-1">
+      <main className="flex flex-col justify-center items-center">
         <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">

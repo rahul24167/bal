@@ -1,5 +1,5 @@
-import { NavLink, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { NavLink, useNavigate, useOutletContext } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -20,14 +20,24 @@ interface signupResponse {
   token: string;
   message: string;
 }
+interface ContextProps {
+  isAuthenticated: boolean;
+  setIsAuthenticated: (authStatus: boolean) => void;
+}
 export function SignupForm() {
+  const { isAuthenticated, setIsAuthenticated } = useOutletContext<ContextProps>();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard");
+    }
+  }, [isAuthenticated, navigate]);
   const [postInputs, setPostInputs] = useState<signupInput>({
     username: "",
     email: "",
     password: "",
   });
   const [message, setMessage] = useState("");
-  const navigate = useNavigate();
   const sendSignupRequest = async () => {
     try {
       const response = await axios.post(
@@ -39,7 +49,8 @@ export function SignupForm() {
       if (!token) {
         setMessage(data.message);
       } else {
-        localStorage.setItem("balAuthToken", token);
+        localStorage.setItem("token", token);
+        setIsAuthenticated(true);
         navigate("/dashboard");
       }
     } catch (e) {
@@ -111,10 +122,10 @@ export function SignupForm() {
             />
           </div>
           <Button onClick={sendSignupRequest} type="submit" className="w-full">
-            Login
+            Signup
           </Button>
           <Button variant="outline" className="w-full">
-            Login with Google
+            Guest
           </Button>
         </div>
         <div className="mt-4 text-center text-sm">
