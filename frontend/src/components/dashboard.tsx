@@ -1,16 +1,16 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BACKEND_URL } from "@/config";
-import { useEffect, useState } from "react";
+// import { BACKEND_URL } from "@/config";
+// import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 
 import { sessonInput } from "@rahul24167/bal-common";
 import { Button } from "./ui/button";
-import { Sessons } from "./Sessons";
+// import { Sessons } from "./Sessons";
 
-interface ResponseType {
-  message: string;
-  sessons: object;
-}
+// interface ResponseType {
+//   message: string;
+//   sessons: object;
+// }
 export interface sessonsInput {
   [sessonObjectId: string]: sessonInput;
 }
