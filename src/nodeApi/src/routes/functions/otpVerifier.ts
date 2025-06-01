@@ -19,13 +19,12 @@ export const sendOtp = async (email: string) => {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
+        user: process.env.OUR_EMAIL,
+        pass: process.env.OUR_EMAIL_PASS,
       },
     });
-  
     const mailOptions = {
-      from: process.env.EMAIL_USER,
+      from: process.env.OUR_EMAIL,
       to: email,
       subject: 'Your OTP for Email Verification',
       text: `Your OTP for email verification is ${otp}. It is valid for 10 minutes.`,

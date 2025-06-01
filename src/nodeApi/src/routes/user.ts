@@ -1,8 +1,8 @@
 import express, { Request, Response, NextFunction} from 'express';
 const router = express.Router();
-import zod from 'zod';
+// import zod from 'zod';
 import {User} from '../db/db';
-import { sendOtp, verifyOtp } from './functions/otpVerifier';
+// import { sendOtp, verifyOtp } from './functions/otpVerifier';
 import * as jwt from 'jsonwebtoken';
 const JWT_SECRET = process.env.JWT_SECRET
 import { signupBody, signinBody} from '@rahul24167/bal-common';
